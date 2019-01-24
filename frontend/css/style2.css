@@ -1,0 +1,91 @@
+#blah {
+    position: relative;
+}
+
+.overlay {
+    position: absolute;
+    text-align: center;
+    width: 100%;
+}
+
+#b1 {
+    top: 40%;
+}
+
+#b2 {
+    top: 60%;
+}
+
+/*#countdown {
+    top: 50%;
+    position: absolute;
+    text-align: center;
+    width: 100%;
+}*/
+@import url(https://fonts.googleapis.com/css?family=Roboto+Condensed:700italic);
+@import url(https://fonts.googleapis.com/css?family=Shadows+Into+Light+Two);
+
+#countdown {
+  font-family: 'Roboto Condensed', sans-serif;
+  width: 200px;
+  height: 100px;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  margin-left: -100px;
+  margin-top: -50px;
+  color: white;
+  font-size: 5em;
+  text-align: center;
+  font-weight: bold;
+  font-style: italic;
+  -webkit-opacity: 1;
+  -moz-opacity: 1;
+  opacity: 1;
+  -webkit-transition: opacity 0.4s ease;
+  -moz-transition: opacity 0.4s ease;
+  -ms-transition: opacity 0.4s ease;
+  -o-transition: opacity 0.4s ease;
+  /* solve for flicker problem */
+  -webkit-perspective: 1000;
+  -webkit-backface-visibility: hidden;
+}
+#countdown.puffer {
+  -webkit-opacity: 0;
+  -moz-opacity: 0;
+  opacity: 0;
+  -webkit-transform: scale(1.6, 1.6);
+  -moz-transform: scale(1.6, 1.6);
+  -ms-transform: scale(1.6, 1.6);
+  -o-transform: scale(1.6, 1.6);
+  -webkit-transition: all 0.4s ease-out;
+  -moz-transition: all 0.4s ease-out;
+  -ms-transition: all 0.4s ease-out;
+  -o-transition: all 0.4s ease-out;
+}
+
+
+
+.light {
+  width: 100%;
+  height: 100%;
+  background-color: #FFF;
+  position: fixed;
+  top: 0;
+  left:0;
+  right:0;
+  opacity: 0;
+  z-index:-1;
+  -webkit-transition: all .4s ease-in-out;
+  font-family: 'Shadows Into Light Two', cursive;
+  color: #AB8048;
+  text-align: center;
+  display:table;
+  font-size:4em;
+  color:#DDDDDD;
+  padding-top:100px;
+}
+.light-active{
+  opacity:1;
+  z-index:99999;
+}

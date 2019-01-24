@@ -1,0 +1,13 @@
+[Unit]
+Description=A Websocket daemon which runs scripts on demand
+After=network.target
+[Service]
+Type=simple
+Restart=always
+User=root
+GuessMainPID=true
+WorkingDirectory=/home/pi/photobox/
+ExecStart=/usr/bin/websocketd --port=80 --dir=/home/pi/photobox/backend --staticdir=/home/pi/photobox/frontend
+ExecStop=/bin/kill $MAINPID
+[Install]
+WantedBy=multi-user.target

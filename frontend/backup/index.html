@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Polaroid Effect CSS Keyframes</title>
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+
+    <link rel="stylesheet" href="css/style2.css">
+
+
+</head>
+
+<body>
+
+    <!--<div class="wrapper">
+  <div class="polaroid">
+     <img src="img/1.png" />
+  </div>
+</div>
+  
+-->
+
+    <div class="container" style="width:100%;padding:0px;">
+        <div id="blah" style="width:100%;">
+
+            <img id="pic" src="pics/8.jpg" class="img-fluid" width=100% style="width:100%;">
+            <div class="light">
+ 	CHEESE!
+  </div>
+            <div style="display:none;" id="countdown">
+                <p>Los gehts!</p>
+            </div>
+            <div class="overlay" id="b1">
+                <a id="take" class="btn btn-danger btn-lg" onclick="javascript:shoot();">Foto aufnehmen</a>
+                <a id="again" style="display:none;" class="btn btn-danger btn-lg" onclick="javascript:shoot();">erneut versuchen</a>
+            </div>
+            <div class="overlay" id="b2">
+                <a class="btn btn-danger btn-lg" style="display:none;" id="print" onclick="javascript:printpic();">Foto drucken</a>
+            </div>
+
+        </div>
+    </div>
+
+    <!--<div class="button" id="take" onclick="javascript:shoot();">Foto aufnehmen</div>
+    <div class="button" style="display:none;" id="again" onclick="javascript:shoot();">Erneut versuchen</div>
+    <div class="button" style="display:none;" id="print">Foto drucken</div>
+    <div id="countdown" style="display:none">los gehts!</div>-->
+
+    <script src='js/custom.js'></script>
+    <script src='js/jquery-3.3.1.min.js'></script>
+    <script src="js/reconnecting-websocket.min.js"></script>
+</body>
+
+<script>
+    var file="";
+    var pics = new ReconnectingWebSocket('ws://192.168.4.1:80/filewatch.rb', null, {
+        debug: true,
+        reconnectInterval: 3000
+    });
+    pics.onmessage = function(event) {
+        file = event.data.replace(/['"]+/g, '');
+        display(file);
+    };
+    var comm = new ReconnectingWebSocket('ws://192.168.4.1:80/comm.rb', null, {
+        debug: true,
+        reconnectInterval: 3000
+    });
+
+
+    display = function(image) {
+        $("#print").show();
+        $(".overlay").show();
+        $("#again").show();
+        $("#take").hide();
+        $("#countdown").hide();
+        $("#pic").show();
+        $("#pic").attr("src", "tmp/" + file);
+
+    }
+    shoot = function() {
+        $(".overlay").hide();
+        $("#countdown").show();
+        //$("#pic").hide();
+        var timeleft = 6;
+        var downloadTimer = setInterval(function() {
+            timeleft = timeleft - 1;
+            $("#countdown").html(timeleft - 1);
+            addClassDelayed($("#countdown"), "puffer", 600);
+              $('#countdown').removeClass("puffer");
+
+            if (timeleft == 2) {
+                comm.send("shoot")
+            };
+            if(timeleft<=1){
+                clearInterval(downloadTimer);
+                $(".light").addClass("light-active");
+                setInterval(function(){$(".light").removeClass("light-active");},500);
+                $("#countdown").hide();
+            }
+        }, 1000);
+    }
+    printpic = function() {
+        comm.send("print,"+file);
+    }
+</script>
+
+
+<!--
+NOTES
+- use gutenprint
+- use dslrdashboard
+-->
+
+</html>
